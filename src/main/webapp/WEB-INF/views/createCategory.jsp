@@ -23,20 +23,26 @@
 		</div>
 		<h4>${err }</h4>
 		<div class="card-body">
-			<form:form action="InsertCat" modelAttribute="cat" method="post">
-				<table>
-					<tr>
-						<th>Name</th>
-						<td><form:input path="name_cat" required="required" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" value="Insert"> <input
-							type="reset" value="reset"></td>
-					</tr>
-				</table>
-			</form:form>
+			<div class="d-flex justify-content-center">
+				<form:form action="InsertCat" modelAttribute="cat" method="post"
+					class="w-50">
+					<table class="table table-bordered">
+						<tr>
+							<th>Tên Danh Mục</th>
+							<td><form:input path="name_cat" required="required"
+									class="form-control" /></td>
+						</tr>
+						<tr>
+						
+							<td colspan="2" class="text-center"><input type="submit"
+								value="Insert" class="btn btn-primary me-2" /> <input
+								type="reset" value="Reset" class="btn btn-secondary" /></td>
+						</tr>
+					</table>
+				</form:form>
+			</div>
 		</div>
+
 		<!-- /.card-body -->
 		<div class="card-footer">Footer</div>
 		<!-- /.card-footer-->

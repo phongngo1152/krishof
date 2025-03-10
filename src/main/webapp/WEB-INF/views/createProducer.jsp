@@ -23,16 +23,18 @@
 		</div>
 		<h4>${err }</h4>
 		<div class="card-body">
-			<form:form action="InsertProducer" modelAttribute="producer" method="post">
-				<table>
+			<form:form action="InsertProducer" modelAttribute="producer"
+				method="post" class="w-75">
+				<table class="table table-striped table-bordered">
 					<tr>
-						<th>Name</th>
-						<td><form:input path="name_producer" required="required" /></td>
+						<th><label for="name_producer">Tên nhà sản xuất:</label></th>
+						<td><form:input path="name_producer" id="name_producer"
+								required="required" class="form-control" /></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td><input type="submit" value="Insert"> <input
-							type="reset" value="reset"></td>
+						<td colspan="2" class="text-center"><input type="submit"
+							value="Thêm mới" class="btn btn-success btn-lg me-3" /> <input
+							type="reset" value="Đặt lại" class="btn btn-warning btn-lg" /></td>
 					</tr>
 				</table>
 			</form:form>

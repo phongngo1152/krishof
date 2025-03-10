@@ -24,21 +24,22 @@
 		<h4>${err }</h4>
 		<div class="card-body">
 			<form:form action="edittCategorize" modelAttribute="cat" method="post">
-				<table>
-					<tr>
-						<th>ID</th>
-						<td><form:input path="categorizeId" readonly="true" /></td>
-					</tr>
-					<tr>
-						<th>Name</th>
-						<td><form:input path="categorizeName" required="required" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" value="Update"> <input
-							type="reset" value="reset"></td>
-					</tr>
-				</table>
+			  <table class="table table-bordered" style="width: 50%; margin: auto;">
+                    <tr>
+                        <td><label for="categorizeId">ID:</label></td>
+                        <td><form:input path="categorizeId" id="categorizeId" class="form-control" readonly="true" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="categorizeName">Tên:</label></td>
+                        <td><form:input path="categorizeName" id="categorizeName" class="form-control" required="required" placeholder="Nhập tên" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg me-3">Cập nhật</button>
+                            <button type="reset" class="btn btn-secondary btn-lg">Đặt lại</button>
+                        </td>
+                    </tr>
+                </table>
 			</form:form>
 		</div>
 		<!-- /.card-body -->

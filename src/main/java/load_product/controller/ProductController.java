@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import load_product.Dao.CategorizeDao;
+import load_product.Dao.FavoriteDao;
 import load_product.Dao.ImageDao;
 import load_product.Dao.ProductDao;
 import load_product.Dao.UserDAO;
@@ -28,6 +29,7 @@ import load_product.Dao.UserRoleDao;
 import load_product.entity.CardProduct;
 import load_product.entity.Categorize;
 import load_product.entity.CustomUserDetails;
+import load_product.entity.Favorite;
 import load_product.entity.Images;
 import load_product.entity.Orders;
 import load_product.entity.Product;
@@ -47,6 +49,9 @@ public class ProductController {
 	private ImageDao imageDao;
 	@Autowired
 	private UserRoleDao userRoleDao;
+	@Autowired
+    private FavoriteDao favoriteDao;
+
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -54,6 +59,7 @@ public class ProductController {
 	}
 	@RequestMapping(value = { "/", "/LoadProducts" })
 	public String LoadBooks(Model model) {
+
 		List<Product> list = productDao.getNewProductsTop();
 		List<Categorize> list_cat = categorizeDao.getCategorizes();
 		List<Product> list_new = productDao.getNewProducts();
@@ -80,6 +86,8 @@ public class ProductController {
 		model.addAttribute("list", list);
 		return "home";
 	}
+	
+	
 	@RequestMapping("/ProductByCatgorize")
 	public String productbycatgorize(@RequestParam("catId") Integer catId,Model model) {
 		List<Categorize> list_cat = categorizeDao.getCategorizes();
@@ -93,12 +101,44 @@ public class ProductController {
 
 	@RequestMapping("/Product")
 	public String Loadproduct(Model model) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails user = null;
+	    String username = "gusser";
+		if (principal instanceof CustomUserDetails) {
+		    // Nếu đã đăng nhập, ép kiểu thành CustomUserDetails
+		    user = (CustomUserDetails) principal;
+		    username = user.getUsername();
+		} 
+
+		
 		List<Categorize> list_cat = categorizeDao.getCategorizes();
 		model.addAttribute("list_cat", list_cat);
-		List<Product> list = productDao.getProducts();
+		List<Product> list = productDao.getNewProductsTop();
 		model.addAttribute("list", list);
 		List<Product> list_new = productDao.getNewProducts();
 		model.addAttribute("list_new", list_new);
+	    List<Favorite> favorites = favoriteDao.getFavoritesByUserName(username);
+	    model.addAttribute("favorites", favorites);
+	    boolean check = true;
+		List<Integer> list_page = productDao.numberPage();
+		model.addAttribute("check",check);
+		model.addAttribute("list_page", list_page);
+
+		return "product";
+	}
+	@RequestMapping("/PageProduct2")
+	public String PageProduct2(Model model,@RequestParam("page") Integer page) {
+		if (page ==null) {
+			page =1;
+		}
+		List<Integer> list_page = productDao.numberPage();
+		List<Product> list = productDao.getNewProductsPaginate(page);
+		List<Categorize> list_cat = categorizeDao.getCategorizes();
+		List<Product> list_new = productDao.getNewProducts();
+		model.addAttribute("list_cat", list_cat);
+		model.addAttribute("list_new", list_new);
+		model.addAttribute("list_page", list_page);
+		model.addAttribute("list", list);
 		return "product";
 	}
 	@RequestMapping("/Blog")
@@ -126,6 +166,16 @@ public class ProductController {
 		List<Images> list = imageDao.getImagebyProId(proId);
 		model.addAttribute("list", list);
 		model.addAttribute("p", product);
+		List<Categorize> list_cat = categorizeDao.getCategorizes();
+		model.addAttribute("list_cat", list_cat);
+		List<Product> listPro= productDao.getNewProductsTop();
+		model.addAttribute("listPro", list);
+		List<Product> list_new = productDao.getNewProducts();
+		model.addAttribute("list_new", list_new);
+	    boolean check = true;
+		List<Integer> list_page = productDao.numberPage();
+		model.addAttribute("check",check);
+		model.addAttribute("list_page", list_page);
 		return "detailproduct";
 	}
 	@RequestMapping("/Card")
@@ -255,18 +305,21 @@ public class ProductController {
 		user.setPassWord(BCrypt.hashpw(pas, BCrypt.gensalt(12)));
 		boolean bl = userDAO.insertUser(user, rl);
 		if (bl) {
-			model.addAttribute("mess", "Register Succes!");
+			model.addAttribute("mess", "Đăng ký thành công!");
 			return "login";
 			
 		} else {
 			
-			model.addAttribute("err","Insert Faill!");
+			model.addAttribute("err","Đăng ký không thành công");
 			model.addAttribute("u", user);
+			user.setPassWord(pas);
 			return "createuser";
 		}
 	
 	}
 	
+
+
 	
 	
 }

@@ -1,5 +1,6 @@
 package load_product.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -147,6 +148,30 @@ public class UserDaoImpl implements UserDAO{
 		}finally {
 			session.close();
 		}		return null;
+	}
+	@Override
+	public List<User> getNewUserPaginate(int page) {
+		Session session = sessionFactory.openSession();
+		int size_list = 8;
+		try {
+			List list = session.createQuery("from User ORDER BY id DESC").setFirstResult(size_list*(page-1)).setMaxResults(8).list();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return null;
+	}
+	@Override
+	public List<Integer> numberPage() {
+		int size_list = getAllUser().size();
+		int number_page = size_list/8+(size_list%8!=0?1:0);
+		 List<Integer> list_page = new ArrayList();
+		 for (int i = 1; i <= number_page; i++) {
+			 	list_page.add(i);
+		}
+		return list_page;
 	}	
 	
 }

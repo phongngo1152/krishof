@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import load_product.Dao.CategorizeDao;
 import load_product.Dao.CategoryDao;
 import load_product.Dao.ImageDao;
 import load_product.Dao.OrderDao;
+import load_product.Dao.OrderStatusDao;
 import load_product.Dao.ProducerDao;
 import load_product.Dao.ProductDao;
 import load_product.Dao.UserDAO;
@@ -36,10 +39,12 @@ import load_product.entity.Category;
 import load_product.entity.CustomUserDetails;
 import load_product.entity.Images;
 import load_product.entity.OrderDetail;
+import load_product.entity.OrderStatus;
 import load_product.entity.Orders;
 import load_product.entity.Producer;
 import load_product.entity.Product;
 import load_product.entity.Role;
+import load_product.entity.StatusType;
 import load_product.entity.User;
 import load_product.entity.User_Role;
 
@@ -62,6 +67,8 @@ public class AdminController {
 	private ProductDao productDao;
 	@Autowired
 	private OrderDao orderDao;
+	@Autowired
+	private OrderStatusDao statusDao ;
 
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
@@ -72,13 +79,23 @@ public class AdminController {
 	@RequestMapping("/welcome")
 	public String adminPage(Model model) {
 		model.addAttribute("mess", "Welcome to admin page");
-		List<Integer> list_page = productDao.numberPage();
-		List<User> list = userDAO.getAllUser();
+		List<Integer> list_page = userDAO.numberPage();
+		List<User> list = userDAO.getNewUserPaginate(1);
 		model.addAttribute("list", list);
 		model.addAttribute("list_page", list_page);
 		return "admin";
 	}
-	
+	@RequestMapping("/PageUserAdmin")
+	public String PageUserAdmin(Model model,@RequestParam("page") Integer page) {
+		if (page ==null) {
+			page =1;
+		}
+		List<Integer> list_page = userDAO.numberPage();
+		List<User> list = userDAO.getNewUserPaginate(page);
+		model.addAttribute("list_page", list_page);
+		model.addAttribute("list", list);
+		return "admin";
+	}
 	@RequestMapping("/UpdateUser")
 	public String updateUser(@RequestParam("userName") String Name, Model model) {
 		User user = userDAO.findByUserName(Name);
@@ -88,6 +105,8 @@ public class AdminController {
 
 	@RequestMapping("/editUser")
 	public String editUser(@ModelAttribute("u") User user, Model model) {
+		String pas = user.getPassWord();
+		user.setPassWord(BCrypt.hashpw(pas, BCrypt.gensalt(12)));
 		Boolean bl = userDAO.updateuser(user);
 		if (bl) {
 			return "redirect:/admin/welcome";
@@ -415,9 +434,24 @@ public class AdminController {
 
 	}
 
+
 	@RequestMapping("/image")
 	public String imagePage(Model model) {
-		List<Product> list = productDao.getProducts();
+		List<Product> list = productDao.getNewProductsPaginate(1);
+		List<Integer> list_page = productDao.numberPage();
+		model.addAttribute("list_page", list_page);
+		model.addAttribute("list", list);
+		return "admin_image";
+	}
+	
+	@RequestMapping("/PageImageAdmin")
+	public String PageImageAdmin(Model model,@RequestParam("page") Integer page) {
+		if (page ==null) {
+			page =1;
+		}
+		List<Integer> list_page = productDao.numberPage();
+		List<Product> list = productDao.getNewProductsPaginate(page);
+		model.addAttribute("list_page", list_page);
 		model.addAttribute("list", list);
 		return "admin_image";
 	}
@@ -463,6 +497,14 @@ public class AdminController {
 			Images images1 = new Images();
 			images1.setProduct(images.getProduct());
 			images1.setNameImage(img.getOriginalFilename());
+			try {
+		        img.transferTo(destination);  
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        model.addAttribute("err", "Error while saving image!");
+		        return "createImage";
+		    } 
+
 			boolean bl = imageDao.insertImages(images1);
 			if (bl == false) {
 				model.addAttribute("err", "Insert Faill!");
@@ -475,7 +517,9 @@ public class AdminController {
 
 		if (blEnded) {
 			model.addAttribute("mess", "Create Images Succes!");
-			List<Images> list = imageDao.getImage();
+			List<Product> list = productDao.getNewProductsPaginate(1);
+			List<Integer> list_page = productDao.numberPage();
+			model.addAttribute("list_page", list_page);
 			model.addAttribute("list", list);
 			return "admin_image";
 		}
@@ -499,6 +543,13 @@ public class AdminController {
 		File destination = new File(f.getAbsolutePath() + "/" + imgFile.getOriginalFilename());
 		images.setNameImage(imgFile.getOriginalFilename());
 		boolean bl = imageDao.updateImages(images);
+		try {
+			imgFile.transferTo(destination);  
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        model.addAttribute("err", "Error while saving image!");
+	        return "updateImage";
+	    } 
 		if (bl) {
 			model.addAttribute("mess", "Update Image Succes!");
 			List<Product> list = productDao.getProducts();
@@ -566,7 +617,16 @@ public class AdminController {
 		String path = request.getServletContext().getRealPath("resources/images");
 		File f = new File(path);
 		File destination = new File(f.getAbsolutePath() + "/" + imgFile.getOriginalFilename());
+
 		product.setAva(imgFile.getOriginalFilename());
+		
+		try {
+	        imgFile.transferTo(destination);  
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        model.addAttribute("err", "Error while saving image!");
+	        return "createProduct";
+	    }
 		boolean bl = productDao.insertPruduct(product);
 		if (bl) {
 			model.addAttribute("mess", "Insert Product Succes!");
@@ -623,6 +683,20 @@ public class AdminController {
 		String path = request.getServletContext().getRealPath("resources/images");
 		File f = new File(path);
 		File destination = new File(f.getAbsolutePath() + "/" + imgFile.getOriginalFilename());
+		try {
+	        imgFile.transferTo(destination);  
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        model.addAttribute("err", "Error while saving image!");
+	        model.addAttribute("product", product);
+			List<Categorize> list_categorize = categorizeDao.getCategorizes();
+			model.addAttribute("list_categorize", list_categorize);
+			List<Category> list_cat = categoryDao.getCategories();
+			model.addAttribute("list_cat", list_cat);
+			List<Producer> list_pro = producerDao.getProducers();
+			model.addAttribute("list_pro", list_pro);
+	        return "updateProduct";
+	    }
 		product.setAva(imgFile.getOriginalFilename());
 		boolean bl = productDao.updatePruduct(product);
 		if (bl) {
@@ -701,25 +775,34 @@ public class AdminController {
 	public String UpdateOrder(@RequestParam("orderId") int id, Model model) {
 		Orders orders = orderDao.getOrders(id);
 		model.addAttribute("order", orders);
+
 		return "updateOrder";
 	}
 	
 	@RequestMapping("/editOrder")
 	public String editOrder(@ModelAttribute("order") Orders orders, Model model) {
-		Orders orders2 = orderDao.getOrders(orders.getOrderId());
-		orders2.setStatus(orders.getStatus());
+		
+		// Chuyển đổi Date thành String với định dạng "yyyy-MM-dd"
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDateOrder = dateFormat.format(orders.getDate_order());
+		String formattedReceivedDate = dateFormat.format(orders.getReceived_date());
 
-		boolean bl = orderDao.updateOrder(orders2);
+		// Đưa vào model để hiển thị trong giao diện (JSP hoặc Thymeleaf)
+		model.addAttribute("formattedDateOrder", formattedDateOrder);
+		model.addAttribute("formattedReceivedDate", formattedReceivedDate);
+
+
+		boolean bl = orderDao.updateOrder(orders);
 		if (bl) {
 			model.addAttribute("mess", "Update Order Succes!");
 			List<Integer> list_page = orderDao.numberPage();
 			List<Orders> list = orderDao.getNewOrderPaginate(1);
 			model.addAttribute("list_page", list_page);
 			model.addAttribute("list", list);
-			if (orders.getStatus()==2) {
+			if (orders.getStatusType().getId() == 4) {
 				return "admin_order";
 			}
-				model.addAttribute("order", orders2);
+				model.addAttribute("order", orders);
 				return "updateOrder";
 			
 			

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <jsp:include page="header_admin.jsp"></jsp:include>
 <!-- Main content -->
 <section class="content">
@@ -36,45 +38,55 @@
 			<table class="table table-border">
 				<tr>
 					<th>Id</th>
-					<th>Name</th>
-					<th>Price</th>
-					<th>Description</th>
-					<th>Category</th>
-					<th>Producer</th>
-					<th>Categorize_id</th>
-					<th>Avarta</th>
+					<th>Tên sản phẩm</th>
+					<th>Giá</th>
+					<th>Mô tả</th>
+					<th>Danh mục</th>
+					<th>Nhà sản xuất</th>
+					<th>Mã phân loại</th>
+					<th>Ảnh đại diện</th>
 				</tr>
 				<c:forEach items="${list }" var="pro">
 					<tr>
 						<td>${pro.proId}</td>
 						<td>${pro.name_product}</td>
-						<td>${pro.price}</td>
+						<td><fmt:formatNumber value="${pro.price}" pattern="#,###" />
+							VND</td>
 						<td>${pro.description}</td>
 						<td>${pro.category.name_cat}</td>
 						<td>${pro.producer.name_producer}</td>
 						<td>${pro.categorize.categorizeName}</td>
-						<td><img src="${pageContext.request.contextPath }/<c:url value="resources"/>/images/${pro.ava}"alt="${pro.ava}"width="120" /></td>
+						<td><img
+							src="${pageContext.request.contextPath }/<c:url value="resources"/>/images/${pro.ava}"
+							alt="${pro.ava}" width="120" /></td>
 
 
 						<td><a
 							href="${pageContext.request.contextPath }/admin/UpdateProduct?proId=${pro.proId}"
-							class="popup-show">Update</a> <a
+							class="popup-show"> <i class="fas fa-edit"></i>
+						</a> <a
 							href="${pageContext.request.contextPath }/admin/deleteProduct?proId=${pro.proId}"
-							class="popup-show"onclick="alert('Do you delete')">Delete</a></td>
+							class="popup-show"
+							onclick="return confirm('Bạn có chắc chắn muốn xoá Không?');">
+								<i class="fas fa-trash-alt"></i>
+						</a></td>
 					</tr>
 				</c:forEach>
 
 			</table>
-			<a href="${pageContext.request.contextPath }/admin/createProduct">Create</a>
+			<a href="${pageContext.request.contextPath }/admin/createProduct"
+				class="popup-show"> <i class="fas fa-plus-circle"></i> Thêm
+			</a>
 
 		</div>
-			<div class="row">
+		<div class="row">
 			<div class="col-md-12">
 				<ul class="pagination">
-				<li ><a href="#"><i class="fa fa-angle-left"></i></a></li>
-				<c:forEach items="${list_page }" var="page">
-					<li class="active"><a href="${pageContext.request.contextPath }/admin/PageProductAdmin?page=${page }">${page }</a></li>
-				</c:forEach>
+					<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+					<c:forEach items="${list_page }" var="page">
+						<li class="active"><a
+							href="${pageContext.request.contextPath }/admin/PageProductAdmin?page=${page }">${page }</a></li>
+					</c:forEach>
 					<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 				</ul>
 			</div>

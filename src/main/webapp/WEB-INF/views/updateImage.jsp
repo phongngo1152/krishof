@@ -31,7 +31,7 @@
 						<td><form:input path="imageId" readonly="true" /></td>
 					</tr>
 					<tr>
-						<th>Product</th>
+						<th>Sản Phẩm</th>
 						<td><form:select path="product.proId">
 								<c:forEach items="${list }" var="pro">
 									<form:option value="${pro.proId}">${pro.proId } - ${pro.name_product }</form:option>
@@ -42,7 +42,7 @@
 							</form:select></td>
 					</tr>
 					<tr>
-						<th>Image</th>
+						<th>Ảnh</th>
 						<td><img
 							src="${pageContext.request.contextPath }/<c:url value="resources"/>/images/${images.nameImage}"
 							alt="${images.nameImage}" width="120" /></td>

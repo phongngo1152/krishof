@@ -34,14 +34,14 @@
 		<div class="card-body">
 			<table class="table table-border">
 				<tr>
-					<th>Id</th>
-					<th>Username</th>
-					<th>Fullname</th>
-					<th>Gender</th>
-					<th>Birthday</th>
-					<th>Address</th>
+					<th></th>
+					<th>Tên đăng nhập</th>
+					<th>Họ và tên</th>
+					<th>Giới tính</th>
+					<th>Ngày sinh</th>
+					<th>Địa chỉ</th>
 					<th>Email</th>
-					<th>Role</th>
+					<th>Quyền</th>
 				</tr>
 				<c:forEach items="${list }" var="user">
 					<tr>
@@ -52,25 +52,39 @@
 						<td>${user.birthday}</td>
 						<td>${user.address}</td>
 						<td>${user.email}</td>
-						<td>
-							<c:forEach items="${user.userRoles}" var="u">
+						<td><c:forEach items="${user.userRoles}" var="u">
 								${u.role.id==1?'Admin':'User' }
 							
-							</c:forEach>
-						
-						</td>
+							</c:forEach></td>
 						<td><a
 							href="${pageContext.request.contextPath }/admin/UpdateUser?userName=${user.userName}"
-							class="popup-show">Update</a> <a
+							class="popup-show"> <i class="fas fa-edit"></i>
+						</a> <a
 							href="${pageContext.request.contextPath }/admin/deleteUser?userId=${user.id}"
-							class="popup-show"onclick="alert('Do you delete')"> Delete </a></td>
+							class="popup-show"
+							onclick="return confirm('Are you sure you want to delete this user?');">
+								<i class="fas fa-trash-alt"></i>
+						</a></td>
 					</tr>
 				</c:forEach>
 
 			</table>
-			<a href="${pageContext.request.contextPath }/admin/createadmin">Create</a>
+			<a href="${pageContext.request.contextPath }/admin/createadmin"
+				class="popup-show"> <i class="fas fa-user-plus"></i>
+			</a>
 		</div>
-	
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="pagination">
+					<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+					<c:forEach items="${list_page }" var="page">
+						<li class="active"><a
+							href="${pageContext.request.contextPath }/admin/PageUserAdmin?page=${page }">${page }</a></li>
+					</c:forEach>
+					<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+				</ul>
+			</div>
+		</div>
 		<!-- /.card-body -->
 		<div class="card-footer"></div>
 		<!-- /.card-footer-->

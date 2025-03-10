@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+
 
 <!DOCTYPE HTML>
 <html lang="en-US">
@@ -94,45 +97,49 @@
 									<option value="En">En</option>
 									<option value="Bd">Bd</option>
 							</select></li>
-							<li><a href="${pageContext.request.contextPath }/Card" class="krishok-cart"><i
-									class="fa fa-shopping-cart"></i> <span>3</span></a></li>
+							<li><a href="${pageContext.request.contextPath }/Card"
+								class="krishok-cart"><i class="fa fa-shopping-cart"></i> <span>3</span></a></li>
+							<li><a
+								href="${pageContext.request.contextPath }/user/viewFavorites"
+								class="krishok-cart"><i class="fa fa-heart"></i> </a></li>
 							<c:if test="${pageContext.request.userPrincipal.name == null}">
-								<li><a href="#" class="popup-show">Login</a>
+								<li><a href="#" class="popup-show">Đăng Nhập</a>
 									<div class="login-popup login-form contact-form">
-										<h4>Login</h4>
+										<h4>Đăng Nhập</h4>
 										<form name='loginForm'
 											action="<c:url value='j_spring_security_login' />"
 											method='POST'>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="contact-container">
-														<input type="text" placeholder="UserName" name="username"
-															required="required"> <i class="fa fa-envelope"></i>
+														<input type="text" placeholder="Tên Người Dùng"
+															name="username" required="required"> <i
+															class="fa fa-envelope"></i>
 													</div>
 												</div>
 												<div class="col-sm-12 mb-15">
 													<div class="contact-container">
-														<input type="password" placeholder="Password"
+														<input type="password" placeholder="Mật Khẩu"
 															name="password" required="required"> <i
 															class="fa fa-eye"></i>
 													</div>
 												</div>
 												<div class="col-sm-6 text-left mb-15">
 													<input type="checkbox">
-													<p>Remember me</p>
+													<p>Nhớ Mật Khẩu</p>
 												</div>
 												<div class="col-sm-6 text-right mb-15">
 													<div class="popup-light">
-														<p>Forget Password ?</p>
+														<p>Quên Mật Khẩu ?</p>
 													</div>
 												</div>
 												<div class="col-sm-12 mb-30">
 
-													<button class="krishok-btn">LOGIN</button>
+													<button class="krishok-btn">ĐĂNG NHẬP</button>
 												</div>
 												<div class="col-sm-12 mb-15">
 													<div class="sign-with">
-														<p>Or Sign In With</p>
+														<p>Hoặc Đăng Nhập Với</p>
 													</div>
 												</div>
 												<div class="col-sm-12">
@@ -142,9 +149,9 @@
 												</div>
 												<div class="col-sm-12 mt-30">
 													<p>
-														Don’t Have an Account ? <a
+														Bạn Chưa Có Tài Khoản ? <a
 															href="${pageContext.request.contextPath }/createuser"
-															class="registration-form-show">Create Now</a>
+															class="registration-form-show">Tạo Ngay</a>
 													</p>
 												</div>
 											</div>
@@ -154,7 +161,7 @@
 										</div>
 									</div>
 									<div class="login-popup registration-form contact-form">
-										<h4>Create Account</h4>
+										<h4>Tạo Tài Khoản</h4>
 										<form action="#">
 											<div class="row">
 												<div class="col-sm-12">
@@ -181,16 +188,16 @@
 												<div class="col-sm-12 text-left mb-15">
 													<input type="checkbox">
 													<p>
-														Agree with <span>terms and condition</span>
+														<span>Điều Khoản và Điều Kiện</span>
 													</p>
 												</div>
 												<div class="col-sm-12 mb-20">
-													<button class="krishok-btn">Create Account</button>
+													<button class="krishok-btn">Tạo Tài Khoản</button>
 												</div>
 												<div class="col-sm-12">
 													<p>
-														Already Have an Account ? <a href="#"
-															class="login-form-show">Login Now</a>
+														Đã có tài khoản ? <a href="#"
+															class="login-form-show"> Đăng Nhập</a>
 													</p>
 												</div>
 											</div>
@@ -208,7 +215,7 @@
 										method="post">
 										<input type="hidden" name="${_csrf.parameterName}"
 											value="${_csrf.token}" /> <input type="submit"
-											value="Logout" />
+											value="Đăng Xuất" />
 									</form>
 								</li>
 
@@ -237,17 +244,26 @@
 					<div class="mainmenu">
 						<ul id="primary-menu">
 							<li class="active"><a
-								href="${pageContext.request.contextPath }/LoadProducts">Home</a></li>
-							<li><a href="${pageContext.request.contextPath }/Product">Products</a>
+								href="${pageContext.request.contextPath }/LoadProducts">Trang
+									Chủ</a></li>
+							<li><a href="${pageContext.request.contextPath }/Product">Sản
+									Phẩm</a>
 								<ul>
 									<c:forEach items="${list_cat }" var="cat">
-										<li><a href="ProductByCatgorize?catId=${cat.categorizeId }">${cat.categorizeName }</a></li>
+										<li><a
+											href="ProductByCatgorize?catId=${cat.categorizeId }">${cat.categorizeName }</a></li>
 									</c:forEach>
 								</ul></li>
-							<li><a href="${pageContext.request.contextPath }/About">About</a></li>
+							<li><a href="${pageContext.request.contextPath }/About">Giới
+									Thiệu</a></li>
 							<li><a href="${pageContext.request.contextPath }/Blog">Blog</a></li>
-							<li><a href="${pageContext.request.contextPath }/user/Checkout">Order Detail</a></li>
-							<li><a href="${pageContext.request.contextPath }/Concat">Concat</a></li>
+							<li><a
+								href="${pageContext.request.contextPath }/user/Checkout">Đơn
+									Hàng</a></li>
+							<li><a href="${pageContext.request.contextPath }/Concat">Liên
+									Hệ</a></li>
+							<%-- 	<li><a href="${pageContext.request.contextPath}/user/viewFavorites">Favorites</a></li> --%>
+
 
 						</ul>
 					</div>

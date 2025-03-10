@@ -122,5 +122,31 @@ public class OrderImpl implements OrderDao{
 		
 		
 	}
+	public List<Orders> getOrdersByUserId(Long userId) {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        String hql = "FROM Orders WHERE users_id = :userId";
+	        List<Orders> list = session.createQuery(hql, Orders.class)
+	                                   .setParameter("userId", userId)
+	                                   .list();
+	        return list;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
+	    return null;
+	}
+  
+	@Override
+	public List<Integer> numberPageUser(Long id) {
+		int size_list = getOrdersByUserId(id).size();
+		int number_page = size_list/8+(size_list%8!=0?1:0);
+		 List<Integer> list_page = new ArrayList();
+		 for (int i = 1; i <= number_page; i++) {
+			 	list_page.add(i);
+		}
+		return list_page;
+	}
 
 }

@@ -1,6 +1,8 @@
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 	
-	<footer class="main-footer">
+	<!-- <footer class="main-footer">
 			<div class="float-right d-none d-sm-block">
 				<b>Version</b> 3.0.5
 			</div>
@@ -9,13 +11,13 @@
 			</strong> All rights reserved.
 		</footer>
 
-		<!-- Control Sidebar -->
+ -->		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
 		</aside>
 		<!-- /.control-sidebar -->
-	</div>
-	<!-- ./wrapper -->
+<!-- 	</div>
+ -->	<!-- ./wrapper -->
 
 	<!-- jQuery -->
 	<script

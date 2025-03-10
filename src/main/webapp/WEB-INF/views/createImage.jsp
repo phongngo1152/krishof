@@ -23,30 +23,31 @@
 		</div>
 		<h4>${err }</h4>
 		<div class="card-body">
-			<form:form action="InsertImage" modelAttribute="images" method="post"
-				enctype="multipart/form-data">
-				<table>
-					<tr>
-						<td><form:select path="product.proId">
-								<c:forEach items="${list }" var="pro">
-									<form:option value="${pro.proId}">${pro.proId } - ${pro.name_product }</form:option>
-
-								</c:forEach>
-
-
-							</form:select></td>
-					</tr>
-					<tr>
-						<th>Image</th>
-						<td><input type="file" name="imgFile" multiple="multiple"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" value="Insert"> <input
-							type="reset" value="reset"></td>
-					</tr>
-				</table>
-			</form:form>
+			<div class="d-flex justify-content-center">
+        <form:form action="InsertImage" modelAttribute="images" method="post" enctype="multipart/form-data" class="w-50">
+            <table class="table table-bordered">
+                <tr>
+                    <td><label for="product">Sản phẩm:</label></td>
+                    <td>
+                        <form:select path="product.proId" id="product" class="form-control">
+                            <c:forEach items="${list}" var="pro">
+                                <form:option value="${pro.proId}">${pro.proId} - ${pro.name_product}</form:option>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="imgFile">Hình ảnh:</label></th>
+                    <td><input type="file" name="imgFile" id="imgFile" class="form-control" multiple="multiple" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input type="submit" value="Thêm mới" class="btn btn-primary me-2" />
+                        <input type="reset" value="Đặt lại" class="btn btn-secondary" />
+                    </td>
+                </tr>
+            </table>
+        </form:form>
 		</div>
 		<!-- /.card-body -->
 		<div class="card-footer">Footer</div>

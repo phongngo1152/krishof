@@ -36,7 +36,7 @@
 			<table class="table table-border">
 				<tr>
 					<th>Id</th>
-					<th>Name</th>
+					<th>Tên</th>
 				</tr>
 				<c:forEach items="${list }" var="cat">
 					<tr>
@@ -45,14 +45,18 @@
 
 						<td><a
 							href="${pageContext.request.contextPath }/admin/UpdateCategorize?catId=${cat.categorizeId}"
-							class="popup-show">Update</a> <a
+							class="popup-show"> <i class="fas fa-edit"></i> 
+						</a> <a
 							href="${pageContext.request.contextPath }/admin/deleteCategorize?catId=${cat.categorizeId}"
-							class="popup-show"onclick="alert('Do you delete')">Delete</a></td>
+							class="popup-show"
+							onclick="return confirm('Bạn có chắc chắn muốn xoá Không?');">
+								<i class="fas fa-trash-alt"></i> 
+						</a></td>
 					</tr>
 				</c:forEach>
 
 			</table>
-			<a href="${pageContext.request.contextPath }/admin/createCategorize">Create</a>
+			<a href="${pageContext.request.contextPath }/admin/createCategorize"><i class="fas fa-plus-circle"></i>Thêm Mới</a>
 
 		</div>
 		<div class="row">

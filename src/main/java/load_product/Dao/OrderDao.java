@@ -14,5 +14,8 @@ public interface OrderDao {
 	public List<Orders> getNewOrderPaginate(int page);
 	public List<Integer> numberPage();
 	public Orders getOrders(int id);
+	
+	public List<Integer> numberPageUser(Long id);
+
 }
 

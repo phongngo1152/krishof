@@ -40,6 +40,15 @@ public class Product {
 	private Set<Images> images;
 	@OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
 	private Set<OrderDetail> orderDetails;
+	@OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+	private Set<Favorite> favorites;
+
+	public Set<Favorite> getFavorites() {
+		return favorites;
+	}
+	public void setFavorites(Set<Favorite> favorites) {
+		this.favorites = favorites;
+	}
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub

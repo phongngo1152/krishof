@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails {
 	
 	private Collection<? extends GrantedAuthority> authorities;
+	private Long id;
 	private String email;
 	private String fullName;
 	private String password;
@@ -25,10 +26,11 @@ public class CustomUserDetails implements UserDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomUserDetails(Collection<? extends GrantedAuthority> authorities, String email, String fullName,
+	public CustomUserDetails(Collection<? extends GrantedAuthority> authorities,Long id , String email, String fullName,
 			String password, String username, Boolean gender, String address, String telephone, Boolean enabled,
 			Boolean accountNonExpired, Boolean accountNonLocked, boolean credentialsNonExpired) {
 		super();
+		this.id = id;
 		this.authorities = authorities;
 		this.email = email;
 		this.fullName = fullName;
@@ -41,6 +43,14 @@ public class CustomUserDetails implements UserDetails {
 		this.accountNonExpired = accountNonExpired;
 		this.accountNonLocked = accountNonLocked;
 		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -146,6 +156,24 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
+	}
+
+	public CustomUserDetails(Collection<? extends GrantedAuthority> authorities, String email, String fullName,
+			String password, String username, Boolean gender, String address, String telephone, Boolean enabled,
+			Boolean accountNonExpired, Boolean accountNonLocked, boolean credentialsNonExpired) {
+		super();
+		this.authorities = authorities;
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+		this.username = username;
+		this.gender = gender;
+		this.address = address;
+		this.telephone = telephone;
+		this.enabled = enabled;
+		this.accountNonExpired = accountNonExpired;
+		this.accountNonLocked = accountNonLocked;
+		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
 	@Override

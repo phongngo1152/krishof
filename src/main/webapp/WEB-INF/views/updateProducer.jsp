@@ -24,20 +24,25 @@
 		</div>
 		<h4>${err }</h4>
 		<div class="card-body">
-			<form:form action="edittProducer" modelAttribute="producer" method="post">
+			<form:form action="edittProducer" modelAttribute="producer"
+				method="post">
 				<table>
 					<tr>
-						<th>ID</th>
-						<td><form:input path="producerId" readonly="true" /></td>
+						<th><strong>ID</strong></th>
+						<td><form:input path="producerId" readonly="true"
+								class="form-control" /></td>
 					</tr>
 					<tr>
-						<th>Name</th>
-						<td><form:input path="name_producer" required="required" /></td>
+						<th><strong>Tên Nhà Sản Xuất</strong></th>
+						<td><form:input path="name_producer" required="required"
+								class="form-control" /></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Update"> <input
-							type="reset" value="reset"></td>
+						<td>
+							<button type="submit" class="btn btn-primary">Update</button>
+							<button type="reset" class="btn btn-secondary">Reset</button>
+						</td>
 					</tr>
 				</table>
 			</form:form>

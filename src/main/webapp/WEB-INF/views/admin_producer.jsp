@@ -37,7 +37,7 @@
 		<table class="table table-border">
 			<tr>
 				<th>Id</th>
-				<th>Name</th>
+				<th>Tên</th>
 			</tr>
 			<c:forEach items="${list }" var="pro">
 				<tr>
@@ -46,27 +46,32 @@
 
 					<td><a
 						href="${pageContext.request.contextPath }/admin/UpdateProducer?proId=${pro.producerId}"
-						class="popup-show">Update</a> <a
+						class="popup-show"> <i class="fas fa-edit"></i>
+					</a> <a
 						href="${pageContext.request.contextPath }/admin/deleteProducer?proId=${pro.producerId}"
-						class="popup-show"onclick="alert('Do you delete')">Delete</a></td>
+						class="popup-show"
+						onclick="return confirm('Bạn có chắc chắn muốn xoá Không?');">
+							<i class="fas fa-trash-alt"></i>
+					</a></td>
 				</tr>
 			</c:forEach>
 
 		</table>
-		<a href="${pageContext.request.contextPath }/admin/createProducer">Create</a>
+		<a href="${pageContext.request.contextPath }/admin/createProducer"><i class="fas fa-plus-circle"></i>Thêm mới</a>
 
 	</div>
 	<div class="row">
-			<div class="col-md-12">
-				<ul class="pagination">
-				<li ><a href="#"><i class="fa fa-angle-left"></i></a></li>
+		<div class="col-md-12">
+			<ul class="pagination">
+				<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
 				<c:forEach items="${list_page }" var="page">
-					<li class="active"><a href="${pageContext.request.contextPath }/admin/PageProducerAdmin?page=${page }">${page }</a></li>
+					<li class="active"><a
+						href="${pageContext.request.contextPath }/admin/PageProducerAdmin?page=${page }">${page }</a></li>
 				</c:forEach>
-					<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-				</ul>
-			</div>
+				<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+			</ul>
 		</div>
+	</div>
 	<!-- /.card-body -->
 	<div class="card-footer"></div>
 	<!-- /.card-footer-->

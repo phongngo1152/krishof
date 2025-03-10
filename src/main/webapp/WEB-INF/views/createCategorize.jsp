@@ -26,7 +26,7 @@
 			<form:form action="InsertCategorize" modelAttribute="cat" method="post">
 				<table>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<td><form:input path="categorizeName" required="required" /></td>
 					</tr>
 					<tr>

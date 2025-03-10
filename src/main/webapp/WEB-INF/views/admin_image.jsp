@@ -36,21 +36,26 @@
 			<table class="table table-border">
 				<tr>
 					<th>Id</th>
-					<th>Image</th>
-					<th>Product</th>
+					<th>Ảnh</th>
+					<th>Sản Phẩm</th>
 				</tr>
 				<c:forEach items="${list }" var="pro">
 					<c:forEach items="${pro.images }" var="img">
 						<tr>
 							<td>${img.imageId}</td>
-							<td><img src="${pageContext.request.contextPath }/<c:url value="resources"/>/images/${img.nameImage}"
+							<td><img
+								src="${pageContext.request.contextPath }/<c:url value="resources"/>/images/${img.nameImage}"
 								alt="${img.nameImage}" width="120" /></td>
 							<td>${img.product.name_product}</td>
 							<td><a
 								href="${pageContext.request.contextPath }/admin/UpdateImage?imageId=${img.imageId}"
-								class="popup-show">Update</a> <a
+								class="popup-show"> <i class="fas fa-edit"></i> 
+							</a> <a
 								href="${pageContext.request.contextPath }/admin/deleteImage?imageId=${img.imageId}"
-								class="popup-show"onclick="alert('Do you delete')">Delete</a></td>
+								class="popup-show"
+								onclick="return confirm('Bạn có chắc chắn muốn xoá Không?');">
+									<i class="fas fa-trash-alt"></i> 
+							</a></td>
 						</tr>
 
 					</c:forEach>
@@ -58,8 +63,20 @@
 				</c:forEach>
 
 			</table>
-			<a href="${pageContext.request.contextPath }/admin/createImage">Create</a>
+			<a href="${pageContext.request.contextPath }/admin/createImage"><i class="fas fa-plus-circle"></i>Thêm Mới</a>
 
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="pagination">
+					<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+					<c:forEach items="${list_page }" var="page">
+						<li class="active"><a
+							href="${pageContext.request.contextPath }/admin/PageImageAdmin?page=${page }">${page }</a></li>
+					</c:forEach>
+					<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+				</ul>
+			</div>
 		</div>
 		<!-- /.card-body -->
 		<div class="card-footer"></div>

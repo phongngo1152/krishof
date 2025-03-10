@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="header_admin.jsp"></jsp:include>
 <!-- Main content -->
 <section class="content">
@@ -37,38 +37,50 @@
 			<table class="table table-border">
 				<tr>
 					<th>Id</th>
-					<th>Date Order</th>
-					<th>FullName</th>
-					<th>Payments</th>
-					<th>Status</th>
+					<th>Ngày đặt hàng</th>
+					<th>Họ và tên</th>
+					<th>Phương thức thanh toán</th>
+					<th>Trạng thái</th>
 					<th></th>
 				</tr>
 				<c:forEach items="${list }" var="order">
 					<tr>
 						<td>${order.orderId}</td>
-						<td><fmt:formatDate value="${order.date_order}"/></td>
+						<td><fmt:formatDate value="${order.date_order}" /></td>
 						<td>${order.fullName}</td>
 						<td>${order.payments}</td>
 						<td>
-							${order.status==0?'<h5 style="color: red">Dang cho xu ly</h5>':''}
-							${order.status==2?'<h5 style="color: yellow">Dang giao hang</h5>':''}
-							${order.status==1?'<h5 style="color: blue">Da Xac nhan</h5>':''}
+							<h5
+								style="color: 
+								    <c:choose>
+								        <c:when test="${order.statusType.status_name == 'Đang Chờ Xác Nhận'}">blue</c:when>
+								        <c:when test="${order.statusType.status_name == 'Đang giao hàng'}">orange</c:when>
+								        <c:when test="${order.statusType.status_name == 'Đã giao'}">green</c:when>
+								        <c:when test="${order.statusType.status_name == 'Đã Nhận Hàng'}">darkgreen</c:when>
+								        <c:when test="${order.statusType.status_name == 'Đợi thanh toán'}">gray</c:when>
+								        <c:when test="${order.statusType.status_name == 'Thanh toán thành công'}">purple</c:when>
+								        <c:when test="${order.statusType.status_name == 'Trả Hàng'}">red</c:when>
+								        <c:when test="${order.statusType.status_name == 'Hủy Đơn Hàng'}">darkred</c:when>
+								        <c:otherwise>black</c:otherwise>
+								    </c:choose>;">${order.statusType.status_name}</h5>
 						</td>
 						<td><a
 							href="${pageContext.request.contextPath }/admin/UpdateOrder?orderId=${order.orderId}"
-							class="popup-show">Update</a> </td>
+							class="popup-show"> <i class="fas fa-edit"></i>
+						</a></td>
 					</tr>
 				</c:forEach>
 
 			</table>
 		</div>
-			<div class="row">
+		<div class="row">
 			<div class="col-md-12">
 				<ul class="pagination">
-				<li ><a href="#"><i class="fa fa-angle-left"></i></a></li>
-				<c:forEach items="${list_page }" var="page">
-					<li class="active"><a href="${pageContext.request.contextPath }/admin/PageOrderAdmin?page=${page }">${page }</a></li>
-				</c:forEach>
+					<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+					<c:forEach items="${list_page }" var="page">
+						<li class="active"><a
+							href="${pageContext.request.contextPath }/admin/PageOrderAdmin?page=${page }">${page }</a></li>
+					</c:forEach>
 					<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 				</ul>
 			</div>

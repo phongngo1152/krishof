@@ -18,5 +18,6 @@ public interface UserDAO {
 	public boolean deleteUser(Long id,User_Role user_Role);
 	public List<User> getUserByName(String username);
 
-	
+	public List<User> getNewUserPaginate(int page);
+	public List<Integer> numberPage();
 }

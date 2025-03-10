@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <jsp:include page="header.jsp"></jsp:include>
 <section class="hero-area ptb-80">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-7 col-md-8 col-sm-10">
 				<div class="hero-area-content ptb-80">
-					<h1>A Place of All Organic Products</h1>
-					<p>Lorem Ipsum is simply dummy text of the printing and
-						typesetting industry. Lorem Ipsum has been the industry's standard
-						dummy text ever since the 1500s, when an unknown printer took a
-						galley of type and scrambled it to make a type specimen book</p>
-					<a href="$" class="krishok-btn">Shop Now <i
+					<h1>Khám Phá Sản Phẩm Hữu Cơ Tươi Mới</h1>
+					<p>Chúng tôi cung cấp các sản phẩm hữu cơ tươi ngon, an toàn và chất lượng. Với phương châm mang lại thực phẩm sạch và bổ dưỡng cho gia đình bạn, chúng tôi cam kết chỉ bán những sản phẩm đã được kiểm tra kỹ lưỡng về chất lượng và nguồn gốc rõ ràng. Mỗi sản phẩm đều được trồng và thu hoạch với quy trình thân thiện với môi trường.</p>
+					<a href="$" class="krishok-btn">Mua ngay <i
 						class="fa fa-shopping-cart"></i></a>
 				</div>
 			</div>
@@ -25,7 +24,7 @@
 			<div class="list-thumb list-thumb2"><img src="<c:url value="resources"/>/images/2.jpg"alt="${s.ava}" /></div>
 		</a>
 	</div>
-	<!--/Slider thumbnail-->
+	<!--Slider thumbnail-->
 </section>
 <!-- hero area end -->
 <!-- shopping product area start -->
@@ -39,14 +38,14 @@
 							<img src="<c:url value="resources"/>/images/${p.ava}"
 								alt="${s.ava}" />
 							<div class="product-img-overlay">
-								<a href="Cardproduct?proId=${p.proId }" class="krishok-btn">Add to cart <i
+								<a href="Cardproduct?proId=${p.proId }" class="krishok-btn">Thêm vào giỏ <i
 									class="fa fa-shopping-cart"></i></a>
 							</div>
 						</div>
 						<p>
 							<a href="Detailproduct?proId=${p.proId }">${p.name_product}</a>
 						</p>
-						<h5>${p.price }</h5>
+						<h5>Giá: <fmt:formatNumber value="${p.price}" pattern="#,###" /> VND</h5>
 					</div>
 				</div>
 
@@ -74,10 +73,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="sec-title">
-					<h2>New Products</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod
-						tempor incididunt ut labore et consectetur adipisicing eiusmod
-						dolore magna aliqua.</p>
+					<h2>Sản phẩm mới</h2>
+					<p>Chúng tôi luôn cập nhật những sản phẩm tươi mới và an toàn nhất từ các trang trại hữu cơ. Mỗi sản phẩm đều được lựa chọn kỹ càng để đảm bảo mang lại giá trị dinh dưỡng cao cho người tiêu dùng. Hãy thử ngay hôm nay và cảm nhận sự khác biệt trong từng sản phẩm!</p>
 				</div>
 			</div>
 		</div>
@@ -121,7 +118,7 @@
 								<div class="product-list-info">
 									<div class="product-list-info-table">
 										<p>${p.name_product}</p>
-										<h5>${p.price }</h5>
+										<h5>Giá: <fmt:formatNumber value="${p.price}" pattern="#,###" /> VND</h5>
 										<div class="product-list-icon">
 											<i class="fa fa-shopping-cart"></i> <i class="fa fa-heart"></i>
 										</div>
@@ -142,10 +139,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="sec-title">
-					<h2>Best Sells</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod
-						tempor incididunt ut labore et consectetur adipisicing eiusmod
-						dolore magna aliqua.</p>
+					<h2>Sản phẩm bán chạy</h2>
+					<p>Khám phá những sản phẩm bán chạy nhất của chúng tôi. Những sản phẩm này được yêu thích bởi khách hàng nhờ vào chất lượng vượt trội và giá trị dinh dưỡng tuyệt vời. Mua ngay để tận hưởng ưu đãi hấp dẫn!</p>
 				</div>
 			</div>
 		</div>
@@ -158,14 +153,14 @@
 							<img src="<c:url value="resources"/>/images/${p.ava}"
 								alt="${s.ava}" />
 							<div class="product-img-overlay">
-								<a href="Cardproduct?proId=${p.proId }" class="krishok-btn">Add to cart <i
+								<a href="Cardproduct?proId=${p.proId }" class="krishok-btn">Thêm vào giỏ <i
 									class="fa fa-shopping-cart"></i></a>
 							</div>
 						</div>
 						<p>
 							<a href="Detailproduct?proId=${p.proId }">${p.name_product}</a>
 						</p>
-						<h5>${p.price }</h5>
+						<h5>Giá: <fmt:formatNumber value="${p.price}" pattern="#,###" /> VND</h5>
 					</div>
 					</c:forEach>
 					
@@ -180,10 +175,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h2>Get Update About Products</h2>
+				<h2>Nhận thông tin cập nhật về sản phẩm mới</h2>
 				<form action="#">
-					<input type="text" placeholder="Email Address">
-					<button type="submit">SUBSCRIBE</button>
+					<input type="text" placeholder="Địa chỉ email">
+					<button type="submit">ĐĂNG KÝ</button>
 				</form>
 			</div>
 		</div>
